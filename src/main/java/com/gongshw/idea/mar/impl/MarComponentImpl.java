@@ -1,9 +1,10 @@
 package com.gongshw.idea.mar.impl;
 
-import com.gongshw.idea.mar.FileState;
+import com.gongshw.idea.mar.domain.FileState;
 import com.gongshw.idea.mar.Gutters;
 import com.gongshw.idea.mar.MarComponent;
 import com.gongshw.idea.mar.MarService;
+import com.gongshw.idea.mar.domain.LineStatus;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditorManager;
@@ -28,11 +29,11 @@ public class MarComponentImpl implements MarComponent {
             public void fileOpened(@NotNull FileEditorManager source, @NotNull VirtualFile file) {
                 @NotNull final MarService marService = MarService.getInstance(project);
                 final Editor editor = source.getSelectedTextEditor();
-                final FileState fileState = marService.getState().stateMap.get(file.getPath());
+                final FileState fileState = marService.getState().getStateMap().get(file.getPath());
                 if (editor == null || fileState == null) {
                     return;
                 }
-                Gutters.add(editor, fileState.lines);
+                Gutters.add(editor, fileState.getLines(LineStatus.READ));
             }
 
             @Override

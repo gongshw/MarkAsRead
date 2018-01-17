@@ -1,6 +1,12 @@
 plugins {
     id "org.jetbrains.intellij" version "0.2.17"
+    id 'io.franzbecker.gradle-lombok' version '1.11'
 }
+
+repositories {
+    jcenter() // or Maven central, required for Lombok dependency
+}
+
 
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
@@ -10,10 +16,16 @@ intellij {
     pluginName 'mark_as_read'
     if (project.hasProperty('localIdea')) {
         localPath localIdea
+        version null
     } else {
-        version 'IC-2016.3'
+        version '2017.3'
     }
 
+}
+
+lombok { // optional: values below are the defaults
+    version = "1.16.20"
+    sha256 = ""
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -21,3 +33,7 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 group 'com.gongshw.idea'
 version '0.0.1-snapshot' // Plugin version
+
+dependencies {
+
+}

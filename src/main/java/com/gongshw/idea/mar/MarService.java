@@ -1,11 +1,9 @@
 package com.gongshw.idea.mar;
 
+import com.gongshw.idea.mar.domain.MarState;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleServiceManager;
 import com.intellij.openapi.project.Project;
-import org.jetbrains.annotations.NotNull;
 
 public interface MarService extends PersistentStateComponent<MarState> {
     static MarService getInstance(Project project) {
