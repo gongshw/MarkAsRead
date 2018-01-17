@@ -1,0 +1,23 @@
+plugins {
+    id "org.jetbrains.intellij" version "0.2.17"
+}
+
+apply plugin: 'idea'
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'java'
+
+intellij {
+    pluginName 'mark_as_read'
+    if (project.hasProperty('localIdea')) {
+        localPath localIdea
+    } else {
+        version 'IC-2016.3'
+    }
+
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+group 'com.gongshw.idea'
+version '0.0.1-snapshot' // Plugin version

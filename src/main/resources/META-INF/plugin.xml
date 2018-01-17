@@ -1,0 +1,53 @@
+<idea-plugin>
+    <id>com.gongshw.idea.mar</id>
+    <name>Mark As Read</name>
+    <version>1.0</version>
+    <vendor email="gongshw1992@gmail.com" url="http://blog.gongshw.com">Gongshw</vendor>
+
+    <description>
+        mark lines as read/unread
+    </description>
+
+    <change-notes><![CDATA[
+      <ol>
+        <li><em>2018-01-17</em> first commit</li>
+      </ol>
+    ]]>
+    </change-notes>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="173.0"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <projectService
+                serviceInterface="com.gongshw.idea.mar.MarService"
+                serviceImplementation="com.gongshw.idea.mar.impl.MarServiceImpl"/>
+    </extensions>
+
+    <project-components>
+        <component>
+            <interface-class>com.gongshw.idea.mar.MarComponent</interface-class>
+            <implementation-class>com.gongshw.idea.mar.impl.MarComponentImpl</implementation-class>
+        </component>
+    </project-components>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="com.gongshw.idea.mar.read" class="com.gongshw.idea.mar.MarkAsReadAction" text="Mark As Read"
+                description="MarkAsReadAction">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+        <action id="com.gongshw.idea.mar.unread" class="com.gongshw.idea.mar.MarkAsUnreadAction" text="Mark As Unread"
+                description="MarkAsReadAction">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+    </actions>
+
+</idea-plugin>
