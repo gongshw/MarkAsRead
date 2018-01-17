@@ -43,10 +43,12 @@
         <action id="com.gongshw.idea.mar.read" class="com.gongshw.idea.mar.MarkAsReadAction" text="Mark As Read"
                 description="MarkAsReadAction">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <keyboard-shortcut first-keystroke="control alt M" second-keystroke="R" keymap="$default"/>
         </action>
         <action id="com.gongshw.idea.mar.unread" class="com.gongshw.idea.mar.MarkAsUnreadAction" text="Mark As Unread"
                 description="MarkAsReadAction">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <keyboard-shortcut first-keystroke="control alt M" second-keystroke="U" keymap="$default"/>
         </action>
     </actions>
 
