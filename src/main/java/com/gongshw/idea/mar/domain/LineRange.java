@@ -18,7 +18,11 @@ public class LineRange implements Comparable<LineRange> {
 
     @Override
     public int compareTo(@NotNull LineRange o) {
-        return this.start - o.start;
+        if (start == o.start) {
+            return end - o.end;
+        } else {
+            return start - o.start;
+        }
     }
 
     public boolean contains(int line) {
@@ -27,6 +31,10 @@ public class LineRange implements Comparable<LineRange> {
 
     public Set<Integer> toLines() {
         return Stream.iterate(start, i -> i + 1).limit(end - start + 1).collect(Collectors.toSet());
+    }
+
+    public int lineCount() {
+        return end - start + 1;
     }
 
     public static LineRange of(int start, int end) {

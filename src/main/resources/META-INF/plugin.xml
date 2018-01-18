@@ -29,6 +29,9 @@
         <projectService
                 serviceInterface="com.gongshw.idea.mar.MarService"
                 serviceImplementation="com.gongshw.idea.mar.impl.MarServiceImpl"/>
+        <toolWindow
+                id="MAR Statistics" icon="/com/gongshw/idea/mar/icons/read.png" anchor="bottom"
+                factoryClass="com.gongshw.idea.mar.MarToolWindowFactory"/>
     </extensions>
 
     <project-components>

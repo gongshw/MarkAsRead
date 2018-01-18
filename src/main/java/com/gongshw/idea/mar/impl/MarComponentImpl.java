@@ -24,15 +24,16 @@ public class MarComponentImpl implements MarComponent {
     MarComponentImpl(Project project) {
         this.project = project;
         MessageBus messageBus = project.getMessageBus();
+        @NotNull final MarService marService = MarService.getInstance(project);
         messageBus.connect().subscribe(FileEditorManagerListener.FILE_EDITOR_MANAGER, new FileEditorManagerListener() {
             @Override
             public void fileOpened(@NotNull FileEditorManager source, @NotNull VirtualFile file) {
-                @NotNull final MarService marService = MarService.getInstance(project);
                 final Editor editor = source.getSelectedTextEditor();
-                final FileState fileState = marService.getState().getStateMap().get(file.getPath());
+                final FileState fileState = marService.getFileState(file.getPath());
                 if (editor == null || fileState == null) {
                     return;
                 }
+                marService.updateFileStatus(file.getPath(), editor.getDocument().getLineCount());
                 Gutters.add(editor, fileState.getLines(LineStatus.READ));
             }
 

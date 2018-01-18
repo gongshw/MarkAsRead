@@ -1,5 +1,6 @@
 package com.gongshw.idea.mar;
 
+import com.gongshw.idea.mar.domain.FileState;
 import com.gongshw.idea.mar.domain.MarState;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
@@ -14,5 +15,9 @@ public interface MarService extends PersistentStateComponent<MarState> {
 
     void markAsUnread(String file, int lineStart, int lineEnd);
 
-    boolean isRead(String file, int line);
+    void updateFileStatus(String file, int lineCount);
+
+    FileState getFileState(String file);
+
+    void setStateChangeRunnable(Runnable runnable);
 }

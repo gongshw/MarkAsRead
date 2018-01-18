@@ -27,9 +27,9 @@ public abstract class BaseLineSelectAction extends AnAction {
         }
         final int startLine = editor.visualToLogicalPosition(selectionModel.getSelectionStartPosition()).line;
         final int endLine = editor.visualToLogicalPosition(selectionModel.getSelectionEndPosition()).line;
-
+        MarService marService = MarService.getInstance(project);
+        marService.updateFileStatus(file.getPath(), editor.getDocument().getLineCount());
         onSelectAction(project, file, editor, startLine, endLine);
-
     }
 
     abstract void onSelectAction(Project project, VirtualFile file, Editor editor, int startLine, int endLine);

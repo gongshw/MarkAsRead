@@ -12,12 +12,18 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 
+import lombok.Setter;
+
 @State(name = "MarService", storages = @Storage("MarService.xml"))
 public class MarServiceImpl implements MarService {
 
     private Logger logger = Logger.getInstance(getClass());
 
     private MarState marState = new MarState();
+
+    @Setter
+    private Runnable stateChangeRunnable = () -> {
+    };
 
     public MarServiceImpl(Project project) {
     }
@@ -39,6 +45,7 @@ public class MarServiceImpl implements MarService {
         fileState.mark(lineStart, lineEnd, LineStatus.READ);
         marState.getStateMap().put(file, fileState);
         logger.info(String.format("mark as read, l%d-%d, %s", lineStart, lineEnd, file));
+        stateChangeRunnable.run();
     }
 
     @Override
@@ -47,11 +54,22 @@ public class MarServiceImpl implements MarService {
         fileState.mark(lineStart, lineEnd, null);
         marState.getStateMap().put(file, fileState);
         logger.info(String.format("mark as unread, l%d-%d, %s", lineStart, lineEnd, file));
+        stateChangeRunnable.run();
     }
 
     @Override
-    public boolean isRead(String file, int line) {
-        return marState.getStateMap().containsKey(file)
-                && marState.getStateMap().get(file).getStatus(line).orElse(null) == LineStatus.READ;
+    public void updateFileStatus(String file, int lineCount) {
+        FileState fileState = marState.getStateMap().getOrDefault(file, new FileState());
+        fileState.setLineCount(lineCount);
+        marState.getStateMap().put(file, fileState);
+        stateChangeRunnable.run();
+    }
+
+    @Override
+    public FileState getFileState(String file) {
+        FileState fileState = marState.getStateMap().getOrDefault(file, new FileState());
+        marState.getStateMap().put(file, fileState);
+        stateChangeRunnable.run();
+        return fileState;
     }
 }
