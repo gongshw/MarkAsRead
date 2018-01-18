@@ -1,6 +1,4 @@
-package com.gongshw.idea.mar;
-
-import javax.swing.JPanel;
+package com.gongshw.idea.mar.gui;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -15,16 +13,14 @@ import com.intellij.ui.content.ContentFactory;
  */
 public class MarToolWindowFactory implements ToolWindowFactory {
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        MarToolWindow window = new MarToolWindow(project);
-        window.init();
-
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
-        MarService marService = MarService.getInstance(project);
-        marService.setStateChangeRunnable(window::refresh);
-        window.refresh();
 
-        JPanel windowContent = window.getContent();
-        Content content = contentFactory.createContent(windowContent, "", false);
+        MarTableView marTableView = MarTableView.create(project);
+        Content content = contentFactory.createContent(marTableView.getContent(), "Table View", false);
         toolWindow.getContentManager().addContent(content);
+
+        MarTreeView marTreeView = MarTreeView.create(project);
+        Content marTreeViewContent = contentFactory.createContent(marTreeView.getContent(), "Tree View", false);
+        toolWindow.getContentManager().addContent(marTreeViewContent);
     }
 }

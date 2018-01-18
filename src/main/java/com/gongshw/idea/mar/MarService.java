@@ -1,5 +1,9 @@
 package com.gongshw.idea.mar;
 
+import java.util.function.BiConsumer;
+
+import org.jetbrains.annotations.NonNls;
+
 import com.gongshw.idea.mar.domain.FileState;
 import com.gongshw.idea.mar.domain.MarState;
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -19,5 +23,7 @@ public interface MarService extends PersistentStateComponent<MarState> {
 
     FileState getFileState(String file);
 
-    void setStateChangeRunnable(Runnable runnable);
+    void addStateChangeListener(@NonNls Runnable runnable);
+
+    void renderToUi(BiConsumer<String, FileState> consumer);
 }
