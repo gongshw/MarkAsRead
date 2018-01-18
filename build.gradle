@@ -1,16 +1,24 @@
 plugins {
     id "org.jetbrains.intellij" version "0.2.17"
     id 'io.franzbecker.gradle-lombok' version '1.11'
+    id 'jacoco'
+    id 'com.github.kt3k.coveralls' version '2.8.2'
 }
 
 repositories {
     jcenter() // or Maven central, required for Lombok dependency
 }
 
-
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true // coveralls plugin depends on xml format report
+        html.enabled = true
+    }
+}
 
 intellij {
     pluginName 'mark_as_read'
